@@ -139,7 +139,7 @@ if [[ $enable_preview =~ ^[Yy]$ ]]; then
     
     if [[ $generate_now =~ ^[Yy]$ ]]; then
         echo -e "${YELLOW}⏳ Generating previews... This may take several minutes...${NC}"
-        sudo -u www-data php "$OCC_CMD" preview:generate-all -vvv || echo -e "${YELLOW}Preview generation app might not be installed${NC}"
+        sudo -u www-data php "$OCC_CMD" preview:generate -vvv || echo -e "${YELLOW}Preview generation app might not be installed${NC}"
     fi
 fi
 
