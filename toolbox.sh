@@ -37,16 +37,17 @@ show_menu() {
     echo "    3) Docker - Container platform"
     echo ""
     echo "  🚀 SETUP"
-    echo "    4) Initial Server Setup - Hardening & basics"
-    echo "    5) Firewall Setup - UFW configuration"
+    echo "    4) Set Hostname - Change hostname & view network info"
+    echo "    5) Initial Server Setup - Hardening & basics"
+    echo "    6) Firewall Setup - UFW configuration"
     echo ""
     echo "  🔐 SECURITY"
-    echo "    6) SSH Hardening - Secure SSH configuration"
-    echo "    7) Fail2Ban - Intrusion prevention"
+    echo "    7) SSH Hardening - Secure SSH configuration"
+    echo "    8) Fail2Ban - Intrusion prevention"
     echo ""
     echo "  🔄 MAINTENANCE"
-    echo "    8) System Update - Full system upgrade"
-    echo "    9) Backup Setup - Automated backup configuration"
+    echo "    9) System Update - Full system upgrade"
+    echo "    10) Backup Setup - Automated backup configuration"
     echo ""
     echo "  0) Exit"
     echo ""
@@ -81,7 +82,7 @@ run_script() {
 # Main loop
 while true; do
     show_menu
-    read -p "Select a brick to build (0-9): " choice
+    read -p "Select a brick to build (0-10): " choice
     
     case $choice in
         1)
@@ -94,21 +95,24 @@ while true; do
             run_script "installers/docker-installer.sh"
             ;;
         4)
-            run_script "setup/initial-setup.sh"
+            run_script "setup/set-hostname.sh"
             ;;
         5)
-            run_script "setup/firewall-setup.sh"
+            run_script "setup/initial-setup.sh"
             ;;
         6)
-            run_script "security/ssh-hardening.sh"
+            run_script "setup/firewall-setup.sh"
             ;;
         7)
-            run_script "security/fail2ban-setup.sh"
+            run_script "security/ssh-hardening.sh"
             ;;
         8)
-            run_script "maintenance/system-update.sh"
+            run_script "security/fail2ban-setup.sh"
             ;;
         9)
+            run_script "maintenance/system-update.sh"
+            ;;
+        10)
             run_script "maintenance/backup-setup.sh"
             ;;
         0)
