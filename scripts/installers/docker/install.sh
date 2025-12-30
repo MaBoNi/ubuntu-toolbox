@@ -237,25 +237,25 @@ echo -e "${GREEN}║   ✅ Docker Installation Complete!    ║${NC}"
 echo -e "${GREEN}╚═══════════════════════════════════════╝${NC}"
 echo ""
 echo -e "${CYAN}Installed components:${NC}"
-echo "  • Docker Engine: ${GREEN}$(docker --version | awk '{print $3}')${NC}"
-echo "  • Docker Compose: ${GREEN}$(docker compose version | awk '{print $4}')${NC}"
+echo -e "  • Docker Engine: ${GREEN}$(docker --version | awk '{print $3}')${NC}"
+echo -e "  • Docker Compose: ${GREEN}$(docker compose version | awk '{print $4}')${NC}"
 
 if [ "$PORTAINER_INSTALLED" = "true" ]; then
-    echo "  • Portainer: ${GREEN}Installed${NC}"
+    echo -e "  • Portainer: ${GREEN}Installed${NC}"
 fi
 
 if docker ps --format '{{.Names}}' | grep -q watchtower; then
-    echo "  • Watchtower: ${GREEN}Installed${NC}"
+    echo -e "  • Watchtower: ${GREEN}Installed${NC}"
 fi
 
 echo ""
 echo -e "${YELLOW}💡 Useful Docker commands:${NC}"
-echo "   List containers:    ${BLUE}docker ps -a${NC}"
-echo "   List images:        ${BLUE}docker images${NC}"
-echo "   View logs:          ${BLUE}docker logs <container>${NC}"
-echo "   Stop container:     ${BLUE}docker stop <container>${NC}"
-echo "   Remove container:   ${BLUE}docker rm <container>${NC}"
-echo "   System cleanup:     ${BLUE}docker system prune -a${NC}"
+echo -e "   List containers:    ${BLUE}docker ps -a${NC}"
+echo -e "   List images:        ${BLUE}docker images${NC}"
+echo -e "   View logs:          ${BLUE}docker logs <container>${NC}"
+echo -e "   Stop container:     ${BLUE}docker stop <container>${NC}"
+echo -e "   Remove container:   ${BLUE}docker rm <container>${NC}"
+echo -e "   System cleanup:     ${BLUE}docker system prune -a${NC}"
 echo ""
 echo -e "${YELLOW}📄 Docker info:${NC}"
 docker info | grep -E "Server Version|Storage Driver|Containers|Images" | sed 's/^/   /'
