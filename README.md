@@ -24,7 +24,17 @@ We're currently building our first set of bricks. Check back soon for:
 
 ## 🎨 How to Use
 
-Each script in this toolbox follows a simple pattern:
+### Quick Start (One-Liner)
+
+Run the interactive menu directly from GitHub:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/MaBoNi/ubuntu-toolbox/main/toolbox.sh)
+```
+
+### Manual Usage
+
+Or clone and run individual scripts:
 
 ```bash
 # 1. Clone the toolbox
@@ -32,10 +42,10 @@ git clone https://github.com/MaBoNi/ubuntu-toolbox.git
 cd ubuntu-toolbox
 
 # 2. Make the script executable
-chmod +x scripts/your-script.sh
+chmod +x scripts/installers/your-script.sh
 
 # 3. Run it!
-./scripts/your-script.sh
+./scripts/installers/your-script.sh
 ```
 
 ## 🧩 Contributing
