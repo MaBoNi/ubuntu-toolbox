@@ -87,13 +87,13 @@ while true; do
     
     case $choice in
         1)
-            run_script "installers/nextdns-installer.sh"
+            run_script "installers/nextdns/install.sh"
             ;;
         2)
-            run_script "installers/nextcloud-menu.sh"
+            run_script "installers/nextcloud/menu.sh"
             ;;
         3)
-            run_script "installers/docker-installer.sh"
+            run_script "installers/docker/install.sh"
             ;;
         4)
             run_script "setup/set-hostname.sh"

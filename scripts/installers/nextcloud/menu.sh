@@ -14,7 +14,7 @@ CYAN='\033[0;36m'
 NC='\033[0m'
 
 # Repository configuration
-REPO_URL="https://raw.githubusercontent.com/MaBoNi/ubuntu-toolbox/main/scripts/installers"
+REPO_URL="https://raw.githubusercontent.com/MaBoNi/ubuntu-toolbox/main/scripts/installers/nextcloud"
 TEMP_DIR="/tmp/ubuntu-toolbox"
 
 # Create temp directory
@@ -74,16 +74,16 @@ while true; do
     
     case $choice in
         1)
-            run_nextcloud_script "nextcloud-installer.sh"
+            run_nextcloud_script "install.sh"
             ;;
         2)
-            run_nextcloud_script "nextcloud-proxy-config.sh"
+            run_nextcloud_script "proxy-config.sh"
             ;;
         3)
-            run_nextcloud_script "nextcloud-reset-password.sh"
+            run_nextcloud_script "reset-password.sh"
             ;;
         4)
-            run_nextcloud_script "nextcloud-maintenance.sh"
+            run_nextcloud_script "maintenance.sh"
             ;;
         0)
             echo -e "${GREEN}👋 Returning to main menu...${NC}"
