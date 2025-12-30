@@ -38,7 +38,7 @@ show_menu() {
     echo ""
     echo "  🚀 SETUP"
     echo "    4) Set Hostname - Change hostname & view network info"
-    echo "    5) Initial Server Setup - Hardening & basics"
+    echo "    5) Initial Server Setup - Interactive setup menu"
     echo "    6) Firewall Setup - UFW configuration"
     echo ""
     echo "  🔐 SECURITY"
