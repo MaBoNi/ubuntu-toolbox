@@ -35,20 +35,21 @@ show_menu() {
     echo "    1) NextDNS - Privacy-focused DNS resolver"
     echo "    2) Nextcloud - Self-hosted cloud platform"
     echo "    3) Docker - Container platform"
+    echo "    4) Restic Backup Server - REST server for backups"
     echo ""
     echo "  🚀 SETUP"
-    echo "    4) Set Hostname - Change hostname & view network info"
-    echo "    5) Initial Server Setup - Interactive setup menu"
-    echo "    6) Firewall Setup - UFW configuration"
+    echo "    5) Set Hostname - Change hostname & view network info"
+    echo "    6) Initial Server Setup - Interactive setup menu"
+    echo "    7) Firewall Setup - UFW configuration"
     echo ""
     echo "  🔐 SECURITY"
-    echo "    7) Import GitHub SSH Keys - Add keys from GitHub user"
-    echo "    8) SSH Hardening - Secure SSH configuration"
-    echo "    9) Fail2Ban - Intrusion prevention"
+    echo "    8) Import GitHub SSH Keys - Add keys from GitHub user"
+    echo "    9) SSH Hardening - Secure SSH configuration"
+    echo "    10) Fail2Ban - Intrusion prevention"
     echo ""
     echo "  🔄 MAINTENANCE"
-    echo "    10) System Update - Full system upgrade"
-    echo "    11) Backup Setup - Automated backup configuration"
+    echo "    11) System Update - Full system upgrade"
+    echo "    12) Backup Setup - Automated backup configuration"
     echo ""
     echo "  0) Exit"
     echo ""
@@ -83,7 +84,7 @@ run_script() {
 # Main loop
 while true; do
     show_menu
-    read -p "Select a brick to build (0-11): " choice
+    read -p "Select a brick to build (0-12): " choice
     
     case $choice in
         1)
@@ -96,27 +97,30 @@ while true; do
             run_script "installers/docker/install.sh"
             ;;
         4)
-            run_script "setup/set-hostname.sh"
+            run_script "installers/restic/server-setup.sh"
             ;;
         5)
-            run_script "setup/initial-setup.sh"
+            run_script "setup/set-hostname.sh"
             ;;
         6)
-            run_script "setup/firewall-setup.sh"
+            run_script "setup/initial-setup.sh"
             ;;
         7)
-            run_script "security/import-github-ssh-keys.sh"
+            run_script "setup/firewall-setup.sh"
             ;;
         8)
-            run_script "security/ssh-hardening.sh"
+            run_script "security/import-github-ssh-keys.sh"
             ;;
         9)
-            run_script "security/fail2ban-setup.sh"
+            run_script "security/ssh-hardening.sh"
             ;;
         10)
-            run_script "maintenance/system-update.sh"
+            run_script "security/fail2ban-setup.sh"
             ;;
         11)
+            run_script "maintenance/system-update.sh"
+            ;;
+        12)
             run_script "maintenance/backup-setup.sh"
             ;;
         0)
