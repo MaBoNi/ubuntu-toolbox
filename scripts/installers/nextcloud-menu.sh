@@ -35,6 +35,8 @@ show_submenu() {
     echo ""
     echo "  1) Install Nextcloud - Complete LAMP stack + Nextcloud"
     echo "  2) Configure for Reverse Proxy - Set up trusted domains & proxies"
+    echo "  3) Reset User Password - Reset any user's password"
+    echo "  4) Setup Maintenance - Configure cron jobs & optimization"
     echo ""
     echo "  0) Back to Main Menu"
     echo ""
@@ -68,7 +70,7 @@ run_nextcloud_script() {
 # Main submenu loop
 while true; do
     show_submenu
-    read -p "Select a brick to build (0-2): " choice
+    read -p "Select a brick to build (0-4): " choice
     
     case $choice in
         1)
@@ -76,6 +78,12 @@ while true; do
             ;;
         2)
             run_nextcloud_script "nextcloud-proxy-config.sh"
+            ;;
+        3)
+            run_nextcloud_script "nextcloud-reset-password.sh"
+            ;;
+        4)
+            run_nextcloud_script "nextcloud-maintenance.sh"
             ;;
         0)
             echo -e "${GREEN}👋 Returning to main menu...${NC}"
