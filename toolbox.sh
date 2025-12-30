@@ -90,7 +90,7 @@ while true; do
             run_script "installers/nextdns-installer.sh"
             ;;
         2)
-            run_script "installers/nextcloud-installer.sh"
+            run_script "installers/nextcloud-menu.sh"
             ;;
         3)
             run_script "installers/docker-installer.sh"
