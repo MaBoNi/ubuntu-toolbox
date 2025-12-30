@@ -14,13 +14,31 @@ This toolbox contains modular scripts and utilities for common Ubuntu server tas
 
 ## 📦 Available Bricks
 
-### Coming Soon!
-We're currently building our first set of bricks. Check back soon for:
-- Server setup and hardening scripts
-- Application installers (Nextcloud, Docker, etc.)
-- Backup and maintenance utilities
-- Network configuration helpers
-- Security tools
+### 📦 Installers
+- **NextDNS** - Privacy-focused DNS resolver with automatic configuration
+- **Nextcloud** - Complete LAMP stack + Nextcloud installation
+- **Docker** - Coming soon!
+
+### 🚀 Setup
+- **Configure APT Cacher** - Speed up package downloads with caching proxy
+- **Set Hostname** - Interactive hostname configuration + network info
+- **Initial Server Setup** - Interactive submenu with:
+  - System updates
+  - Timezone configuration
+  - Root SSH disable
+  - Automatic security updates
+  - Swap configuration
+  - Run all (complete automated setup)
+- **Firewall Setup** - Coming soon!
+
+### 🔐 Security
+- **Import GitHub SSH Keys** - Fetch and import SSH keys from GitHub users
+- **SSH Hardening** - Coming soon!
+- **Fail2Ban** - Coming soon!
+
+### 🔄 Maintenance
+- **System Update** - Full system upgrade with cleanup
+- **Backup Setup** - Coming soon!
 
 ## 🎨 How to Use
 
