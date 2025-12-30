@@ -33,8 +33,8 @@ This toolbox contains modular scripts and utilities for common Ubuntu server tas
 
 ### 🔐 Security
 - **Import GitHub SSH Keys** - Fetch and import SSH keys from GitHub users
-- **SSH Hardening** - Coming soon!
-- **Fail2Ban** - Coming soon!
+- **SSH Hardening** - Comprehensive SSH security configuration with strong ciphers
+- **Fail2Ban** - Intrusion prevention with auto-ban for failed login attempts
 
 ### 🔄 Maintenance
 - **System Update** - Full system upgrade with cleanup
