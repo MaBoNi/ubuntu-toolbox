@@ -56,11 +56,24 @@ if systemctl is-active --quiet beszel-agent 2>/dev/null; then
     echo ""
 fi
 
-# Use defaults (no interactive prompts)
-HUB_URL="$DEFAULT_HUB_URL"
-PORT="$DEFAULT_PORT"
-PUBLIC_KEY="$DEFAULT_PUBLIC_KEY"
-TOKEN="$DEFAULT_TOKEN"
+echo -e "${CYAN}Press Enter to use defaults or type to override:${NC}"
+echo ""
+
+# Hub URL
+read -p "Hub URL [$DEFAULT_HUB_URL]: " HUB_URL
+HUB_URL=${HUB_URL:-$DEFAULT_HUB_URL}
+
+# Port
+read -p "Listen Port [$DEFAULT_PORT]: " PORT
+PORT=${PORT:-$DEFAULT_PORT}
+
+# Public Key
+read -p "Public Key [${DEFAULT_PUBLIC_KEY:0:40}...]: " PUBLIC_KEY
+PUBLIC_KEY=${PUBLIC_KEY:-$DEFAULT_PUBLIC_KEY}
+
+# Token
+read -p "Token [${DEFAULT_TOKEN:0:20}...]: " TOKEN
+TOKEN=${TOKEN:-$DEFAULT_TOKEN}
 
 echo ""
 echo -e "${BLUE}📦 Downloading and installing Beszel agent...${NC}"
