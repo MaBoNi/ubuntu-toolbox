@@ -36,76 +36,31 @@ echo "  • Sends metrics to your Beszel Hub"
 echo "  • Runs as a system service (non-root)"
 echo "  • Supports automatic updates"
 echo ""
-echo -e "${CYAN}Your Hub is at:${NC} ${GREEN}$DEFAULT_HUB_URL${NC}"
+echo -e "${CYAN}Hub URL:${NC} ${GREEN}$DEFAULT_HUB_URL${NC}"
+echo -e "${CYAN}Port:${NC} ${GREEN}$DEFAULT_PORT${NC}"
 echo ""
-
-read -p "Continue with Beszel agent installation? (Y/n): " confirm
-confirm=${confirm:-Y}
-
-if [[ ! $confirm =~ ^[Yy]$ ]]; then
-    echo -e "${YELLOW}Installation cancelled.${NC}"
-    exit 0
-fi
 
 # Check if already installed
 if systemctl is-active --quiet beszel-agent 2>/dev/null; then
-    echo ""
     echo -e "${YELLOW}⚠️  Beszel agent is already installed and running.${NC}"
-    read -p "Do you want to reinstall/reconfigure it? (y/N): " reconfig
-    
-    if [[ ! $reconfig =~ ^[Yy]$ ]]; then
+    echo -e "${CYAN}💡 To check agent status:${NC}"
+    echo -e "   ${BLUE}sudo systemctl status beszel-agent${NC}"
+    echo ""
+    read -p "Continue with reinstallation? (y/N): " confirm
+    if [[ ! $confirm =~ ^[Yy]$ ]]; then
         echo -e "${YELLOW}Installation cancelled.${NC}"
-        echo ""
-        echo -e "${CYAN}💡 To check agent status:${NC}"
-        echo -e "   ${BLUE}sudo systemctl status beszel-agent${NC}"
         exit 0
     fi
-    
     echo -e "${YELLOW}Stopping existing service...${NC}"
     systemctl stop beszel-agent || true
-fi
-
-echo ""
-echo -e "${BLUE}🔧 Configuration${NC}"
-echo ""
-
-# Ask for Hub URL
-echo -e "${CYAN}Hub URL [${DEFAULT_HUB_URL}]:${NC}"
-read -p "> " HUB_URL
-HUB_URL=${HUB_URL:-$DEFAULT_HUB_URL}
-
-# Ask for Port
-echo ""
-echo -e "${CYAN}Agent listen port [${DEFAULT_PORT}]:${NC}"
-read -p "> " PORT
-PORT=${PORT:-$DEFAULT_PORT}
-
-# Ask if using default credentials or custom
-echo ""
-echo -e "${CYAN}Use default configuration for this network?${NC}"
-echo -e "  Public Key: ${DEFAULT_PUBLIC_KEY:0:40}..."
-echo -e "  Token: ${DEFAULT_TOKEN}"
-read -p "(Y/n): " use_default
-use_default=${use_default:-Y}
-
-if [[ $use_default =~ ^[Yy]$ ]]; then
-    PUBLIC_KEY="$DEFAULT_PUBLIC_KEY"
-    TOKEN="$DEFAULT_TOKEN"
-else
     echo ""
-    echo -e "${CYAN}Enter your Public Key from Beszel Hub:${NC}"
-    read -p "> " PUBLIC_KEY
-    
-    echo ""
-    echo -e "${CYAN}Enter your Token from Beszel Hub:${NC}"
-    read -p "> " TOKEN
 fi
 
-# Validate inputs
-if [ -z "$PUBLIC_KEY" ] || [ -z "$TOKEN" ] || [ -z "$HUB_URL" ]; then
-    echo -e "${RED}❌ Error: All fields are required${NC}"
-    exit 1
-fi
+# Use defaults (no interactive prompts)
+HUB_URL="$DEFAULT_HUB_URL"
+PORT="$DEFAULT_PORT"
+PUBLIC_KEY="$DEFAULT_PUBLIC_KEY"
+TOKEN="$DEFAULT_TOKEN"
 
 echo ""
 echo -e "${BLUE}📦 Downloading and installing Beszel agent...${NC}"
