@@ -37,20 +37,22 @@ show_menu() {
     echo "    3) Docker - Container platform"
     echo "    4) Restic Backup Server - REST server for backups"
     echo "    5) BorgBackup Server - SSH-based backup server"
+    echo "    6) Beszel Agent - Monitoring agent for VMs"
+    echo ""
     echo ""
     echo "  🚀 SETUP"
-    echo "    6) Set Hostname - Change hostname & view network info"
-    echo "    7) Initial Server Setup - Interactive setup menu"
-    echo "    8) Firewall Setup - UFW configuration"
+    echo "    7) Set Hostname - Change hostname & view network info"
+    echo "    8) Initial Server Setup - Interactive setup menu"
+    echo "    9) Firewall Setup - UFW configuration"
     echo ""
     echo "  🔐 SECURITY"
-    echo "    9) Import GitHub SSH Keys - Add keys from GitHub user"
-    echo "    10) SSH Hardening - Secure SSH configuration"
-    echo "    11) Fail2Ban - Intrusion prevention"
+    echo "    10) Import GitHub SSH Keys - Add keys from GitHub user"
+    echo "    11) SSH Hardening - Secure SSH configuration"
+    echo "    12) Fail2Ban - Intrusion prevention"
     echo ""
     echo "  🔄 MAINTENANCE"
-    echo "    12) System Update - Full system upgrade"
-    echo "    13) Backup Setup - Restic or BorgBackup client"
+    echo "    13) System Update - Full system upgrade"
+    echo "    14) Backup Setup - Restic or BorgBackup client"
     echo ""
     echo "  0) Exit"
     echo ""
@@ -85,7 +87,7 @@ run_script() {
 # Main loop
 while true; do
     show_menu
-    read -p "Select a brick to build (0-13): " choice
+    read -p "Select a brick to build (0-14): " choice
     
     case $choice in
         1)
@@ -104,27 +106,30 @@ while true; do
             run_script "installers/borg/server-setup.sh"
             ;;
         6)
-            run_script "setup/set-hostname.sh"
+            run_script "installers/beszel/agent-install.sh"
             ;;
         7)
-            run_script "setup/initial-setup.sh"
+            run_script "setup/set-hostname.sh"
             ;;
         8)
-            run_script "setup/firewall-setup.sh"
+            run_script "setup/initial-setup.sh"
             ;;
         9)
-            run_script "security/import-github-ssh-keys.sh"
+            run_script "setup/firewall-setup.sh"
             ;;
         10)
-            run_script "security/ssh-hardening.sh"
+            run_script "security/import-github-ssh-keys.sh"
             ;;
         11)
-            run_script "security/fail2ban-setup.sh"
+            run_script "security/ssh-hardening.sh"
             ;;
         12)
-            run_script "maintenance/system-update.sh"
+            run_script "security/fail2ban-setup.sh"
             ;;
         13)
+            run_script "maintenance/system-update.sh"
+            ;;
+        14)
             run_script "maintenance/backup-setup.sh"
             ;;
         0)

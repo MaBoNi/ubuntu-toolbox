@@ -17,7 +17,8 @@ This toolbox contains modular scripts and utilities for common Ubuntu server tas
 ### 📦 Installers
 - **NextDNS** - Privacy-focused DNS resolver with automatic configuration
 - **Nextcloud** - Complete LAMP stack + Nextcloud installation
-- **Docker** - Coming soon!
+- **Docker** - Container platform setup
+- **Beszel Agent** - Lightweight monitoring agent for VMs
 
 ### 🚀 Setup
 - **Configure APT Cacher** - Speed up package downloads with caching proxy
