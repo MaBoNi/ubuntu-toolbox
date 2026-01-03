@@ -37,6 +37,7 @@ show_submenu() {
     echo "  2) Configure for Reverse Proxy - Set up trusted domains & proxies"
     echo "  3) Reset User Password - Reset any user's password"
     echo "  4) Setup Maintenance - Configure cron jobs & optimization"
+    echo "  5) Enable Video Previews - Setup FFmpeg & thumbnail generation"
     echo ""
     echo "  0) Back to Main Menu"
     echo ""
@@ -70,7 +71,7 @@ run_nextcloud_script() {
 # Main submenu loop
 while true; do
     show_submenu
-    read -p "Select a brick to build (0-4): " choice
+    read -p "Select a brick to build (0-5): " choice
     
     case $choice in
         1)
@@ -84,6 +85,9 @@ while true; do
             ;;
         4)
             run_nextcloud_script "maintenance.sh"
+            ;;
+        5)
+            run_nextcloud_script "video-previews.sh"
             ;;
         0)
             echo -e "${GREEN}👋 Returning to main menu...${NC}"
