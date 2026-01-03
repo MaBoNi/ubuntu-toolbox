@@ -25,12 +25,13 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # Detect Nextcloud installation
-NC_CONFIG="/var/www/html/nextcloud/config/config.php"
-NC_OCC="/var/www/html/nextcloud/occ"
-NC_DATA_DIR="/var/www/html/nextcloud/data"
+NC_DIR="/var/www/nextcloud"
+NC_CONFIG="$NC_DIR/config/config.php"
+NC_OCC="$NC_DIR/occ"
+NC_DATA_DIR="$NC_DIR/data"
 
 if [ ! -f "$NC_CONFIG" ]; then
-    echo -e "${RED}❌ Nextcloud not found at /var/www/html/nextcloud${NC}"
+    echo -e "${RED}❌ Nextcloud not found at $NC_DIR${NC}"
     echo -e "${YELLOW}Please run the Nextcloud installer first.${NC}"
     exit 1
 fi
