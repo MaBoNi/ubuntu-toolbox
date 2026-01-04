@@ -46,20 +46,23 @@ fi
 echo -e "${CYAN}System Memory Information:${NC}"
 echo ""
 
-# Get total memory in MB
+# Get total memory in MiB (using 1024 for binary)
 TOTAL_MEM_KB=$(grep MemTotal /proc/meminfo | awk '{print $2}')
-TOTAL_MEM_MB=$((TOTAL_MEM_KB / 1024))
-TOTAL_MEM_GB=$(echo "scale=1; $TOTAL_MEM_MB / 1024" | bc)
+TOTAL_MEM_MIB=$((TOTAL_MEM_KB / 1024))
+TOTAL_MEM_GIB=$(echo "scale=1; $TOTAL_MEM_MIB / 1024" | bc)
 
-# Get available memory in MB
+# Get available memory in MiB
 AVAILABLE_MEM_KB=$(grep MemAvailable /proc/meminfo | awk '{print $2}')
-AVAILABLE_MEM_MB=$((AVAILABLE_MEM_KB / 1024))
+AVAILABLE_MEM_MIB=$((AVAILABLE_MEM_KB / 1024))
 
-# Get current PHP memory limit
-CURRENT_PHP_MEMORY=$(php -r "echo ini_get('memory_limit');")
+# Get current PHP memory limit from Apache config (not CLI)
+CURRENT_PHP_MEMORY=$(grep -E "^memory_limit" "$PHP_INI" | tail -1 | awk '{print $3}' || echo "not set")
+if [ -z "$CURRENT_PHP_MEMORY" ] || [ "$CURRENT_PHP_MEMORY" = "not" ]; then
+    CURRENT_PHP_MEMORY="not set"
+fi
 
-echo -e "  💾 Total RAM:        ${BLUE}${TOTAL_MEM_GB}G (${TOTAL_MEM_MB}M)${NC}"
-echo -e "  ✅ Available RAM:    ${GREEN}${AVAILABLE_MEM_MB}M${NC}"
+echo -e "  💾 Total RAM:        ${BLUE}${TOTAL_MEM_GIB}G (${TOTAL_MEM_MIB}M)${NC}"
+echo -e "  ✅ Available RAM:    ${GREEN}${AVAILABLE_MEM_MIB}M${NC}"
 echo -e "  ⚙️  Current PHP Limit: ${YELLOW}${CURRENT_PHP_MEMORY}${NC}"
 echo ""
 
@@ -69,27 +72,27 @@ echo -e "${CYAN}═════════════════════�
 echo ""
 
 # Calculate recommendations based on total memory
-if [ $TOTAL_MEM_MB -ge 15000 ]; then
+if [ $TOTAL_MEM_MIB -ge 15000 ]; then
     # 16GB+ systems
-    echo -e "${GREEN}For your ${TOTAL_MEM_GB}G system:${NC}"
+    echo -e "${GREEN}For your ${TOTAL_MEM_GIB}G system:${NC}"
     echo "  • Conservative:  2G (good for multi-service servers)"
     echo "  • Balanced:      4G (recommended for most setups)"
     echo "  • Performance:   8G (for large files and many users)"
-elif [ $TOTAL_MEM_MB -ge 7000 ]; then
+elif [ $TOTAL_MEM_MIB -ge 7000 ]; then
     # 8GB systems
-    echo -e "${GREEN}For your ${TOTAL_MEM_GB}G system:${NC}"
+    echo -e "${GREEN}For your ${TOTAL_MEM_GIB}G system:${NC}"
     echo "  • Conservative:  1G (good for multi-service servers)"
     echo "  • Balanced:      2G (recommended for most setups)"
     echo "  • Performance:   4G (for large files)"
-elif [ $TOTAL_MEM_MB -ge 3500 ]; then
+elif [ $TOTAL_MEM_MIB -ge 3500 ]; then
     # 4GB systems
-    echo -e "${GREEN}For your ${TOTAL_MEM_GB}G system:${NC}"
+    echo -e "${GREEN}For your ${TOTAL_MEM_GIB}G system:${NC}"
     echo "  • Conservative:  512M (good for multi-service servers)"
     echo "  • Balanced:      1G (recommended for most setups)"
     echo "  • Performance:   2G (for larger files)"
 else
     # <4GB systems
-    echo -e "${YELLOW}For your ${TOTAL_MEM_GB}G system:${NC}"
+    echo -e "${YELLOW}For your ${TOTAL_MEM_GIB}G system:${NC}"
     echo "  • Conservative:  256M (basic operation)"
     echo "  • Balanced:      512M (recommended minimum)"
 fi
@@ -128,10 +131,10 @@ elif [[ "$MEMORY_INPUT" =~ ^([0-9]+)M$ ]]; then
 fi
 
 # Validate against available memory (leave at least 512M for system)
-MAX_SAFE_MB=$((TOTAL_MEM_MB - 512))
-if [ $INPUT_MB -gt $MAX_SAFE_MB ]; then
+MAX_SAFE_MIB=$((TOTAL_MEM_MIB - 512))
+if [ $INPUT_MB -gt $MAX_SAFE_MIB ]; then
     echo -e "${RED}❌ Warning: Requested ${MEMORY_INPUT} exceeds safe limit${NC}"
-    echo -e "${YELLOW}Maximum recommended: ${MAX_SAFE_MB}M (leaving 512M for system)${NC}"
+    echo -e "${YELLOW}Maximum recommended: ${MAX_SAFE_MIB}M (leaving 512M for system)${NC}"
     echo ""
     read -p "Continue anyway? (y/N): " FORCE_CONTINUE
     if [[ ! $FORCE_CONTINUE =~ ^[Yy]$ ]]; then
