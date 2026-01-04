@@ -37,7 +37,7 @@ show_submenu() {
     echo "  2) Configure for Reverse Proxy - Set up trusted domains & proxies"
     echo "  3) Reset User Password - Reset any user's password"
     echo "  4) Setup Maintenance - Configure cron jobs & optimization"
-    echo "  5) Enable Video Previews - Setup FFmpeg & thumbnail generation"
+    echo "  5) Configure PHP/Apache Memory - Adjust memory limits"
     echo ""
     echo "  0) Back to Main Menu"
     echo ""
@@ -87,7 +87,7 @@ while true; do
             run_nextcloud_script "maintenance.sh"
             ;;
         5)
-            run_nextcloud_script "video-previews.sh"
+            run_nextcloud_script "configure-memory.sh"
             ;;
         0)
             echo -e "${GREEN}👋 Returning to main menu...${NC}"
