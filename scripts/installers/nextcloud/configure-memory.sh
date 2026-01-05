@@ -207,10 +207,10 @@ echo -e "${GREEN}║   ✅ Configuration Complete!      ║${NC}"
 echo -e "${GREEN}╚═══════════════════════════════════╝${NC}"
 echo ""
 
-# Verify new settings
-NEW_PHP_MEMORY=$(php -r "echo ini_get('memory_limit');")
-NEW_UPLOAD_MAX=$(php -r "echo ini_get('upload_max_filesize');")
-NEW_POST_MAX=$(php -r "echo ini_get('post_max_size');")
+# Verify new settings by reading from the Apache php.ini file
+NEW_PHP_MEMORY=$(grep -E "^memory_limit" "$PHP_INI" | tail -1 | awk '{print $3}')
+NEW_UPLOAD_MAX=$(grep -E "^upload_max_filesize" "$PHP_INI" | tail -1 | awk '{print $3}')
+NEW_POST_MAX=$(grep -E "^post_max_size" "$PHP_INI" | tail -1 | awk '{print $3}')
 
 echo -e "${CYAN}New Configuration:${NC}"
 echo -e "  ⚙️  PHP Memory Limit:      ${GREEN}${NEW_PHP_MEMORY}${NC}"
