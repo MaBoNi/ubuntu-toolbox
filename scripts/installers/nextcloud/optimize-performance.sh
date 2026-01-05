@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 🧱 Nextcloud Performance Optimization
-# Configure Redis memcache, phone region, and Imagick SVG support
+# Install and configure Redis for memcache and file locking
 
 set -e
 
@@ -35,10 +35,11 @@ if [ ! -f "$NC_CONFIG" ]; then
     exit 1
 fi
 
-echo -e "${CYAN}This script will configure:${NC}"
-echo "  1️⃣  Redis memcache (file locking & caching)"
-echo "  2️⃣  Default phone region"
-echo "  3️⃣  Imagick SVG support"
+echo -e "${CYAN}About Redis:${NC}"
+echo "  • In-memory cache for faster file operations"
+echo "  • Reduces database load significantly"
+echo "  • Handles file locking efficiently"
+echo "  • Lightweight (~10-50MB RAM usage)"
 echo ""
 echo -e "${YELLOW}This will significantly improve Nextcloud performance!${NC}"
 echo ""
@@ -109,65 +110,15 @@ sudo -u www-data php "$NC_OCC" config:system:set redis port --value=0 --type=int
 echo -e "${GREEN}✅ Redis memcache configured${NC}"
 
 echo ""
-echo -e "${BLUE}═══════════════════════════════════════${NC}"
-echo -e "${BLUE}3️⃣  Setting Default Phone Region${NC}"
-echo -e "${BLUE}═══════════════════════════════════════${NC}"
-echo ""
-
-echo -e "${CYAN}Enter your country code (ISO 3166-1):${NC}"
-echo "  Common examples:"
-echo "  • DK - Denmark"
-echo "  • US - United States"
-echo "  • GB - United Kingdom"
-echo "  • DE - Germany"
-echo "  • SE - Sweden"
-echo "  • NO - Norway"
-echo ""
-read -p "Country code [DK]: " COUNTRY_CODE
-COUNTRY_CODE=${COUNTRY_CODE:-DK}
-
-# Convert to uppercase
-COUNTRY_CODE=$(echo "$COUNTRY_CODE" | tr '[:lower:]' '[:upper:]')
-
-sudo -u www-data php "$NC_OCC" config:system:set default_phone_region --value="$COUNTRY_CODE"
-echo -e "${GREEN}✅ Default phone region set to: $COUNTRY_CODE${NC}"
-
-echo ""
-echo -e "${BLUE}═══════════════════════════════════════${NC}"
-echo -e "${BLUE}4️⃣  Installing Imagick SVG Support${NC}"
-echo -e "${BLUE}═══════════════════════════════════════${NC}"
-echo ""
-
-echo -e "${CYAN}Installing ImageMagick with SVG support...${NC}"
-apt install -y imagemagick libmagickcore-6.q16-6-extra
-
-# Find PHP version
-PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;")
-
-# Restart Apache to load the new configuration
-echo -e "${CYAN}Restarting Apache...${NC}"
-systemctl restart apache2
-
-if systemctl is-active --quiet apache2; then
-    echo -e "${GREEN}✅ Imagick SVG support installed${NC}"
-else
-    echo -e "${RED}❌ Apache failed to restart${NC}"
-    echo -e "${YELLOW}Restoring backup...${NC}"
-    cp "$BACKUP_FILE" "$NC_CONFIG"
-    systemctl restart apache2
-    exit 1
-fi
-
-echo ""
 echo -e "${GREEN}╔═══════════════════════════════════╗${NC}"
-echo -e "${GREEN}║   ✅ Optimization Complete!       ║${NC}"
+echo -e "${GREEN}║   ✅ Redis Configured!            ║${NC}"
 echo -e "${GREEN}╚═══════════════════════════════════╝${NC}"
 echo ""
 
 echo -e "${CYAN}Summary:${NC}"
+echo -e "  ✅ Redis server installed and running"
 echo -e "  ✅ Redis memcache configured for file locking and caching"
-echo -e "  ✅ Default phone region set to: ${BLUE}$COUNTRY_CODE${NC}"
-echo -e "  ✅ Imagick SVG support installed"
+echo -e "  ✅ Unix socket configured for optimal performance"
 echo ""
 
 # Verify Redis configuration
