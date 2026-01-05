@@ -100,12 +100,17 @@ cp "$NC_CONFIG" "$BACKUP_FILE"
 echo -e "${GREEN}✅ Backup created: $BACKUP_FILE${NC}"
 
 # Configure Nextcloud to use Redis for memcache and file locking
-echo -e "${CYAN}Configuring memcache settings...${NC}"
+echo -e "${CYAN}Configuring Redis connection...${NC}"
 
-sudo -u www-data php "$NC_OCC" config:system:set memcache.local --value='\OC\Memcache\Redis'
-sudo -u www-data php "$NC_OCC" config:system:set memcache.locking --value='\OC\Memcache\Redis'
+# IMPORTANT: Set Redis connection details FIRST, before enabling memcache
 sudo -u www-data php "$NC_OCC" config:system:set redis host --value='/run/redis/redis-server.sock'
 sudo -u www-data php "$NC_OCC" config:system:set redis port --value=0 --type=integer
+
+echo -e "${CYAN}Enabling memcache...${NC}"
+
+# Now enable memcache (this will try to connect to Redis)
+sudo -u www-data php "$NC_OCC" config:system:set memcache.local --value='\OC\Memcache\Redis'
+sudo -u www-data php "$NC_OCC" config:system:set memcache.locking --value='\OC\Memcache\Redis'
 
 echo -e "${GREEN}✅ Redis memcache configured${NC}"
 
