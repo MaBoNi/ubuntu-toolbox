@@ -38,6 +38,7 @@ show_submenu() {
     echo "  3) Reset User Password - Reset any user's password"
     echo "  4) Setup Maintenance - Configure cron jobs & optimization"
     echo "  5) Configure PHP/Apache Memory - Adjust memory limits"
+    echo "  6) Optimize Performance - Redis, memcache, phone region, SVG support"
     echo ""
     echo "  0) Back to Main Menu"
     echo ""
@@ -71,7 +72,7 @@ run_nextcloud_script() {
 # Main submenu loop
 while true; do
     show_submenu
-    read -p "Select a brick to build (0-5): " choice
+    read -p "Select a brick to build (0-6): " choice
     
     case $choice in
         1)
@@ -88,6 +89,9 @@ while true; do
             ;;
         5)
             run_nextcloud_script "configure-memory.sh"
+            ;;
+        6)
+            run_nextcloud_script "optimize-performance.sh"
             ;;
         0)
             echo -e "${GREEN}👋 Returning to main menu...${NC}"
