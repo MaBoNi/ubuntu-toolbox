@@ -32,8 +32,8 @@ if ! command -v nc >/dev/null 2>&1; then
   echo ""
 fi
 
-# Default APT cacher IP
-DEFAULT_IP="192.168.5.200"
+# Default APT cacher IP (BondIT DK01-P-APTCACHE)
+DEFAULT_IP="10.20.40.12"
 
 echo -e "${CYAN}APT Cacher Configuration${NC}"
 echo -e "${YELLOW}This will configure your system to use an apt-cacher-ng proxy server${NC}"
