@@ -44,15 +44,17 @@ show_menu() {
     echo "    7) Set Hostname - Change hostname & view network info"
     echo "    8) Initial Server Setup - Interactive setup menu"
     echo "    9) Firewall Setup - UFW configuration"
+    echo "    10) Configure APT Cache - Set apt-cacher-ng proxy (default: 10.20.40.12)"
+    echo "    11) Configure DNS - Set DNS to BondIT AdGuard (default: 10.20.40.10)"
     echo ""
     echo "  🔐 SECURITY"
-    echo "    10) Import GitHub SSH Keys - Add keys from GitHub user"
-    echo "    11) SSH Hardening - Secure SSH configuration"
-    echo "    12) Fail2Ban - Intrusion prevention"
+    echo "    12) Import GitHub SSH Keys - Add keys from GitHub user"
+    echo "    13) SSH Hardening - Secure SSH configuration"
+    echo "    14) Fail2Ban - Intrusion prevention"
     echo ""
     echo "  🔄 MAINTENANCE"
-    echo "    13) System Update - Full system upgrade"
-    echo "    14) Backup Setup - Restic or BorgBackup client"
+    echo "    15) System Update - Full system upgrade"
+    echo "    16) Backup Setup - Restic or BorgBackup client"
     echo ""
     echo "  0) Exit"
     echo ""
@@ -87,7 +89,7 @@ run_script() {
 # Main loop
 while true; do
     show_menu
-    read -p "Select a brick to build (0-14): " choice
+    read -p "Select a brick to build (0-16): " choice
     
     case $choice in
         1)
@@ -118,18 +120,24 @@ while true; do
             run_script "setup/firewall-setup.sh"
             ;;
         10)
-            run_script "security/import-github-ssh-keys.sh"
+            run_script "setup/configure-apt-cacher.sh"
             ;;
         11)
-            run_script "security/ssh-hardening.sh"
+            run_script "setup/configure-dns.sh"
             ;;
         12)
-            run_script "security/fail2ban-setup.sh"
+            run_script "security/import-github-ssh-keys.sh"
             ;;
         13)
-            run_script "maintenance/system-update.sh"
+            run_script "security/ssh-hardening.sh"
             ;;
         14)
+            run_script "security/fail2ban-setup.sh"
+            ;;
+        15)
+            run_script "maintenance/system-update.sh"
+            ;;
+        16)
             run_script "maintenance/backup-setup.sh"
             ;;
         0)

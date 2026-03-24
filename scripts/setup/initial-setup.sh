@@ -33,15 +33,16 @@ show_submenu() {
     echo ""
     echo -e "${GREEN}Setup Building Blocks:${NC}"
     echo ""
-    echo "  1) Configure APT Cacher - Speed up package downloads"
-    echo "  2) Set Hostname - Configure server name & view IPs"
-    echo "  3) Update System - Full system upgrade"
-    echo "  4) Configure Timezone - Set server timezone"
-    echo "  5) Disable Root SSH - Improve security"
-    echo "  6) Enable Auto Updates - Automatic security updates"
-    echo "  7) Configure Swap - Setup swap space"
+    echo "  1) Configure APT Cacher - Speed up package downloads (default: 10.20.40.12)"
+    echo "  2) Configure DNS - Set DNS to BondIT AdGuard (default: 10.20.40.10)"
+    echo "  3) Set Hostname - Configure server name & view IPs"
+    echo "  4) Update System - Full system upgrade"
+    echo "  5) Configure Timezone - Set server timezone"
+    echo "  6) Disable Root SSH - Improve security"
+    echo "  7) Enable Auto Updates - Automatic security updates"
+    echo "  8) Configure Swap - Setup swap space"
     echo ""
-    echo "  8) Run All - Execute complete setup (recommended for new servers)"
+    echo "  9) Run All - Execute complete setup (recommended for new servers)"
     echo ""
     echo "  0) Back to Main Menu"
     echo ""
@@ -82,12 +83,13 @@ run_all_setup() {
     echo ""
     echo -e "${YELLOW}This will run all setup steps in order:${NC}"
     echo "  1. Configure APT Cacher"
-    echo "  2. Update System"
-    echo "  3. Configure Timezone"
-    echo "  4. Set Hostname"
-    echo "  5. Disable Root SSH"
-    echo "  6. Enable Auto Updates"
-    echo "  7. Configure Swap"
+    echo "  2. Configure DNS"
+    echo "  3. Update System"
+    echo "  4. Configure Timezone"
+    echo "  5. Set Hostname"
+    echo "  6. Disable Root SSH"
+    echo "  7. Enable Auto Updates"
+    echo "  8. Configure Swap"
     echo ""
     read -p "Continue with complete setup? (y/N): " confirm
     
@@ -101,31 +103,35 @@ run_all_setup() {
     echo ""
     
     # Run each script
-    echo -e "${CYAN}[Step 1/7] Configuring APT Cacher...${NC}"
+    echo -e "${CYAN}[Step 1/8] Configuring APT Cacher...${NC}"
     run_setup_script "configure-apt-cacher.sh" || true
     echo ""
     
-    echo -e "${CYAN}[Step 2/7] Updating system...${NC}"
+    echo -e "${CYAN}[Step 2/8] Configuring DNS...${NC}"
+    run_setup_script "configure-dns.sh" || true
+    echo ""
+    
+    echo -e "${CYAN}[Step 3/8] Updating system...${NC}"
     run_setup_script "update-system.sh" || true
     echo ""
     
-    echo -e "${CYAN}[Step 3/7] Configuring timezone...${NC}"
+    echo -e "${CYAN}[Step 4/8] Configuring timezone...${NC}"
     run_setup_script "configure-timezone.sh" || true
     echo ""
     
-    echo -e "${CYAN}[Step 4/7] Setting hostname...${NC}"
+    echo -e "${CYAN}[Step 5/8] Setting hostname...${NC}"
     run_setup_script "set-hostname.sh" || true
     echo ""
     
-    echo -e "${CYAN}[Step 5/7] Disabling root SSH...${NC}"
+    echo -e "${CYAN}[Step 6/8] Disabling root SSH...${NC}"
     run_setup_script "disable-root-ssh.sh" || true
     echo ""
     
-    echo -e "${CYAN}[Step 6/7] Enabling auto updates...${NC}"
+    echo -e "${CYAN}[Step 7/8] Enabling auto updates...${NC}"
     run_setup_script "enable-auto-updates.sh" || true
     echo ""
     
-    echo -e "${CYAN}[Step 7/7] Configuring swap...${NC}"
+    echo -e "${CYAN}[Step 8/8] Configuring swap...${NC}"
     run_setup_script "configure-swap.sh" || true
     echo ""
     
@@ -140,31 +146,34 @@ run_all_setup() {
 # Main submenu loop
 while true; do
     show_submenu
-    read -p "Select a brick to build (0-8): " choice
+    read -p "Select a brick to build (0-9): " choice
     
     case $choice in
         1)
             run_setup_script "configure-apt-cacher.sh"
             ;;
         2)
-            run_setup_script "set-hostname.sh"
+            run_setup_script "configure-dns.sh"
             ;;
         3)
-            run_setup_script "update-system.sh"
+            run_setup_script "set-hostname.sh"
             ;;
         4)
-            run_setup_script "configure-timezone.sh"
+            run_setup_script "update-system.sh"
             ;;
         5)
-            run_setup_script "disable-root-ssh.sh"
+            run_setup_script "configure-timezone.sh"
             ;;
         6)
-            run_setup_script "enable-auto-updates.sh"
+            run_setup_script "disable-root-ssh.sh"
             ;;
         7)
-            run_setup_script "configure-swap.sh"
+            run_setup_script "enable-auto-updates.sh"
             ;;
         8)
+            run_setup_script "configure-swap.sh"
+            ;;
+        9)
             run_all_setup
             ;;
         0)
