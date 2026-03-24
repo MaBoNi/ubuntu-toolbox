@@ -24,10 +24,12 @@ if [ "$EUID" -ne 0 ]; then
   exec sudo "$0" "$@"
 fi
 
-# Default configuration (can be overridden)
-DEFAULT_HUB_URL="http://192.168.2.68:8999"
-DEFAULT_PUBLIC_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJm5bQv6Hbp/7iMrsJ1DyejHIlMwZ3a5OUF8fGzM4i1c"
-DEFAULT_TOKEN="0739232f-5a16-4f4e-a7d7-77e2150d1211"
+# Default configuration (BondIT DK01-P-BESZEL hub)
+# Key and token are generated per-system from the Beszel Hub UI (Add System)
+# Update these when the hub is reinstalled or when adding to a new site
+DEFAULT_HUB_URL="https://beszel.internal.bondit-dom.net"
+DEFAULT_PUBLIC_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPtVvengnpj3zbPaaYx5/y1tp7CqQoHla6kFuQzEs3f9"
+DEFAULT_TOKEN="78f74db0-5580-4055-b97f-d4ecbab00ab7"
 DEFAULT_PORT="45876"
 
 echo -e "${CYAN}Beszel is a lightweight server monitoring agent that:${NC}"
