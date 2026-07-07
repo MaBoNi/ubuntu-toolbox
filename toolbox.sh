@@ -16,6 +16,21 @@ NC='\033[0m' # No Color
 REPO_URL="https://raw.githubusercontent.com/MaBoNi/ubuntu-toolbox/main/scripts"
 TEMP_DIR="/tmp/ubuntu-toolbox"
 
+# Check for required dependencies
+if ! command -v curl &>/dev/null; then
+    echo -e "${RED}❌ curl is not installed, but it is required.${NC}"
+    read -p "Would you like to install curl now? [y/N] " install_curl
+    if [[ "$install_curl" =~ ^[Yy]$ ]]; then
+        echo -e "${YELLOW}📦 Installing curl...${NC}"
+        sudo apt-get update -qq && sudo apt-get install -y curl
+        echo -e "${GREEN}✅ curl installed successfully!${NC}"
+        echo ""
+    else
+        echo -e "${YELLOW}⚠️  Cannot continue without curl. Exiting.${NC}"
+        exit 1
+    fi
+fi
+
 # Create temp directory
 mkdir -p "$TEMP_DIR"
 
